@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unfiltered Shreyash — Travel Vlogger & Blogger</title>
+<meta name="description" content="Shreyash Waghmare — full-time travel vlogger and blogger exploring Bharat, one state at a time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1B1F3B;
+    --ink-2: #262C52;
+    --ink-3: #333a68;
+    --paper: #F7F1E3;
+    --paper-2: #EFE6D2;
+    --paper-3: #e4d8bc;
+    --saffron: #F2A340;
+    --saffron-deep: #d98a28;
+    --madder: #C1502E;
+    --peacock: #1F6F78;
+    --text: #232323;
+    --text-soft: #5a5646;
+    --surface: #ffffff;
+    --border: rgba(35,35,35,0.14);
+    --bg: var(--paper);
+    --bg-soft: var(--paper-2);
+    --shadow: 0 1px 0 rgba(0,0,0,0.05);
+    color-scheme: light;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+  }
+
+  :root[data-theme="dark"] {
+    --bg: var(--ink);
+    --bg-soft: var(--ink-2);
+    --text: #F3EFE3;
+    --text-soft: #b9b6ce;
+    --surface: #232a52;
+    --border: rgba(243,239,227,0.14);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px)); }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Karla', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background .35s ease, color .35s ease;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .display {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--text);
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  section { padding: 96px 6vw; position: relative; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  .eyebrow { color: var(--madder); }
+
+  ::selection { background: var(--saffron); color: var(--ink); }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--peacock);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 100;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 6vw;
+  }
+  .brand { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 600; display:flex; align-items:center; gap:10px;}
+  .brand .mark {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: conic-gradient(from 210deg, var(--saffron), var(--madder), var(--peacock), var(--saffron));
+    flex: 0 0 auto;
+    display:grid; place-items:center;
+    color: var(--ink); font-weight:700; font-size: .8rem;
+  }
+  nav.links { display: flex; gap: 28px; align-items: center; }
+  nav.links a { font-size: .95rem; font-weight: 600; color: var(--text-soft); transition: color .2s; }
+  nav.links a:hover { color: var(--madder); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  .theme-toggle {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--bg-soft);
+    display: grid; place-items: center; cursor: pointer; color: var(--text);
+    font-size: 1.1rem;
+  }
+  .theme-toggle:hover { border-color: var(--saffron); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px; border-radius: 999px; font-weight: 700; font-size: .92rem;
+    border: 1px solid transparent; cursor: pointer; white-space: nowrap;
+  }
+  .btn-primary { background: var(--madder); color: #fff8ee; }
+  .btn-primary:hover { background: var(--saffron-deep); }
+  .btn-outline { border-color: var(--text); color: var(--text); background: transparent; }
+  .btn-outline:hover { border-color: var(--peacock); color: var(--peacock); }
+
+  .hamburger { display: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg-soft); cursor: pointer; }
+  .hamburger span, .hamburger::before, .hamburger::after { content:''; display:block; width: 18px; height: 2px; background: var(--text); margin: 4px auto; }
+
+  /* ---------- HERO ---------- */
+  .hero { padding-top: 64px; padding-bottom: 60px; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 60px; align-items: center; }
+  .kicker {
+    display: inline-flex; align-items:center; gap: 8px;
+    font-size: .85rem; font-weight: 700; color: var(--peacock);
+    margin-bottom: 18px;
+  }
+  .kicker::before { content:''; width:8px; height:8px; border-radius:50%; background: var(--madder); display:inline-block; }
+  h1.hero-title { font-size: clamp(2.6rem, 5.4vw, 4.4rem); }
+  h1.hero-title em { font-style: italic; color: var(--madder); }
+  .hero-sub { margin-top: 22px; font-size: 1.15rem; color: var(--text-soft); max-width: 46ch; }
+  .hero-ctas { display:flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+  .hero-meta { margin-top: 46px; display:flex; gap: 34px; flex-wrap: wrap; }
+  .hero-meta .stat b { font-family:'Fraunces',serif; font-size: 2rem; display:block; }
+  .hero-meta .stat span { font-size: .85rem; color: var(--text-soft); }
+
+  .hero-art { position: relative; }
+  .stamp {
+    position: absolute; border: 2px solid var(--madder); border-radius: 50%;
+    color: var(--madder); font-family:'Fraunces',serif; font-weight:700;
+    display:grid; place-items:center; text-align:center; line-height:1.1;
+    transform: rotate(-14deg); opacity: .9; background: color-mix(in srgb, var(--madder) 6%, transparent);
+  }
+  .hero-map-box {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 26px;
+    padding: 28px; box-shadow: 0 20px 50px -30px rgba(0,0,0,0.4);
+  }
+  .hero-map-box svg { width: 100%; height: auto; }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 18px 0; overflow: hidden; background: var(--bg-soft); }
+  .marquee-track { display: flex; gap: 46px; white-space: nowrap; animation: scroll 26s linear infinite; width: max-content; }
+  .marquee-track span { font-family:'Fraunces',serif; font-style: italic; font-size: 1.1rem; color: var(--text-soft); }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-head { max-width: 640px; margin-bottom: 52px; }
+  .section-head .eyebrow { font-weight: 700; font-size: .85rem; margin-bottom: 10px; display:block; }
+  .section-head h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); }
+  .section-head p { color: var(--text-soft); margin-top: 14px; font-size: 1.05rem; }
+
+  /* ---------- ABOUT ---------- */
+  .about { background: var(--bg-soft); }
+  .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; align-items: start; }
+  .about-portrait {
+    aspect-ratio: 4/5; border-radius: 20px; overflow:hidden;
+    background: linear-gradient(155deg, var(--saffron), var(--madder) 55%, var(--peacock));
+    display:grid; place-items:center; color:#fff8ee; font-family:'Fraunces',serif; text-align:center; padding: 24px;
+    border: 1px solid var(--border);
+  }
+  .about p { font-size: 1.08rem; color: var(--text-soft); margin: 0 0 18px; max-width: 62ch; }
+  .about-facts { display:grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 30px; }
+  .fact { border-left: 3px solid var(--madder); padding-left: 14px; }
+  .fact b { font-family:'Fraunces',serif; display:block; font-size: 1.05rem; margin-bottom: 2px; }
+  .fact span { color: var(--text-soft); font-size: .92rem; }
+
+  /* ---------- STATES ---------- */
+  .states-progress { display:flex; align-items:center; gap: 16px; margin: 8px 0 40px; }
+  .progress-bar { flex:1; height: 8px; border-radius: 999px; background: var(--bg-soft); overflow:hidden; border: 1px solid var(--border); }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--madder), var(--saffron)); }
+  .progress-label { font-size: .88rem; color: var(--text-soft); white-space: nowrap; font-weight: 600; }
+
+  .state-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .state-card {
+    border: 1px solid var(--border); border-radius: 16px; padding: 20px 18px;
+    background: var(--surface); position: relative; overflow: hidden;
+  }
+  .state-card .num { font-family:'Fraunces',serif; font-size: .8rem; color: var(--text-soft); }
+  .state-card h3 { font-size: 1.15rem; margin-top: 8px; }
+  .state-card .region { font-size: .82rem; color: var(--peacock); font-weight: 700; margin-top: 6px; display:block; }
+  .state-card::after {
+    content:'✓ explored'; position:absolute; bottom: 14px; right: 16px;
+    font-size: .72rem; font-weight: 700; color: var(--madder);
+  }
+  .state-card.next { border-style: dashed; opacity: .75; }
+  .state-card.next::after { content: ''; }
+  .state-card.next h3 { color: var(--text-soft); }
+
+  /* ---------- CONTENT (videos/blogs) ---------- */
+  .tabs { display:flex; gap: 10px; margin-bottom: 36px; }
+  .tab-btn {
+    padding: 10px 20px; border-radius: 999px; border: 1px solid var(--border);
+    background: transparent; color: var(--text-soft); font-weight: 700; font-size: .9rem; cursor:pointer;
+  }
+  .tab-btn.active { background: var(--madder); color: #fff8ee; border-color: var(--madder); }
+  .content-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .content-card {
+    border-radius: 18px; overflow: hidden; border: 1px solid var(--border); background: var(--surface);
+    display:flex; flex-direction:column;
+  }
+  .thumb {
+    aspect-ratio: 16/10; position: relative;
+    display:grid; place-items:center; color: #fff8ee; font-family:'Fraunces',serif; font-size: 1.15rem; text-align:center; padding: 18px;
+  }
+  .thumb::before { content:''; position:absolute; inset:0; opacity:.9; }
+  .thumb .play {
+    position:absolute; width:52px; height:52px; border-radius:50%; background: rgba(255,255,255,.92);
+    display:grid; place-items:center; color: var(--ink); font-size: 1rem;
+  }
+  .thumb .dur {
+    position: absolute; bottom: 10px; right: 12px; background: rgba(0,0,0,.6); color: #fff;
+    font-family: 'Karla', sans-serif; font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 6px;
+  }
+  a.card-link { display:block; color: inherit; }
+  a.card-link:hover .content-card { border-color: var(--saffron-deep); }
+  a.card-link:hover .thumb { filter: brightness(1.06); }
+  .content-body { padding: 18px 20px 22px; }
+  .content-body .tag { font-size: .75rem; font-weight: 700; color: var(--peacock); text-transform: none; }
+  .content-body h3 { font-size: 1.05rem; margin-top: 8px; }
+  .content-body p { color: var(--text-soft); font-size: .92rem; margin-top: 8px; }
+
+  .channel-cta {
+    margin-top: 46px; display:flex; align-items:center; justify-content: space-between; gap: 24px;
+    flex-wrap: wrap; padding: 28px 32px; border-radius: 20px;
+    background: linear-gradient(120deg, var(--ink) 0%, var(--peacock) 130%); color: #fff8ee;
+  }
+  .channel-cta h3 { color: #fff8ee; font-size: 1.4rem; }
+  .channel-cta p { color: #d9e6e2; margin-top: 6px; }
+
+  /* ---------- TIMELINE / WHY FULL-TIME ---------- */
+  .why { background: var(--bg-soft); }
+  .why-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .why-card { background: var(--surface); border:1px solid var(--border); border-radius: 18px; padding: 28px 24px; }
+  .why-card .icon { font-size: 1.6rem; }
+  .why-card h3 { font-size: 1.15rem; margin-top: 14px; }
+  .why-card p { color: var(--text-soft); font-size: .95rem; margin-top: 8px; }
+
+  /* ---------- COLLAB / CONTACT ---------- */
+  .contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; }
+  .contact-info h2 { font-size: clamp(2rem, 3.6vw, 2.7rem); }
+  .contact-info p { color: var(--text-soft); margin-top: 16px; max-width: 46ch; }
+  .contact-links { margin-top: 32px; display:flex; flex-direction:column; gap: 14px; }
+  .contact-link {
+    display:flex; align-items:center; gap: 14px; padding: 14px 16px; border: 1px solid var(--border);
+    border-radius: 14px; background: var(--surface); font-weight: 700; font-size: .95rem;
+  }
+  .contact-link .ico {
+    width: 40px; height:40px; border-radius: 50%; display:grid; place-items:center; flex:0 0 auto;
+    background: var(--bg-soft); font-size: 1.1rem;
+  }
+  .contact-link small { display:block; font-weight:500; color: var(--text-soft); font-size: .8rem; margin-top: 2px;}
+
+  .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: 22px; padding: 34px; }
+  .form-card h3 { font-size: 1.3rem; }
+  .form-card p.hint { color: var(--text-soft); font-size: .9rem; margin-top: 6px; }
+  form { margin-top: 24px; display: grid; gap: 16px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { font-size: .82rem; font-weight: 700; color: var(--text-soft); display:block; margin-bottom: 6px; }
+  input, select, textarea {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-family: 'Karla', sans-serif; font-size: .95rem;
+  }
+  textarea { resize: vertical; min-height: 96px; }
+  .form-note { font-size: .8rem; color: var(--text-soft); }
+
+  /* ---------- FOOTER ---------- */
+  footer { padding: 48px 6vw 40px; border-top: 1px solid var(--border); }
+  .footer-inner { max-width: 1180px; margin: 0 auto; display:flex; justify-content: space-between; align-items:center; flex-wrap: wrap; gap: 16px; }
+  .footer-inner .brand { font-size: 1.05rem; }
+  .footer-social { display:flex; gap: 14px; }
+  .footer-social a { font-size: .85rem; font-weight: 700; color: var(--text-soft); }
+  .footer-social a:hover { color: var(--madder); }
+  .footer-bottom { text-align:center; margin-top: 28px; font-size: .8rem; color: var(--text-soft); }
+
+  /* ---------- WHATSAPP FLOAT ---------- */
+  .wa-float {
+    position: fixed; right: 22px; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); z-index: 200;
+  }
+  .wa-btn {
+    width: 60px; height: 60px; border-radius: 50%; background: #25D366; color: #fff;
+    display:grid; place-items:center; box-shadow: 0 10px 24px -8px rgba(0,0,0,.45); cursor:pointer; border: none;
+    font-size: 1.6rem;
+  }
+  .wa-panel {
+    position: absolute; bottom: 74px; right: 0; width: 280px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px;
+    box-shadow: 0 20px 40px -14px rgba(0,0,0,.5);
+    opacity: 0; pointer-events: none; transform: translateY(10px) scale(.98);
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .wa-panel.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+  .wa-panel h4 { font-family:'Fraunces',serif; font-size: 1.05rem; margin: 0 0 6px; }
+  .wa-panel p { font-size: .85rem; color: var(--text-soft); margin: 0 0 14px; }
+  .wa-panel a.btn { width: 100%; justify-content: center; }
+
+  /* ---------- toast ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: #fff8ee; padding: 14px 22px; border-radius: 999px;
+    font-size: .9rem; font-weight: 700; opacity: 0; pointer-events: none; transition: all .3s ease; z-index: 300;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 980px) {
+    .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .hero-art { order: -1; }
+    .state-grid { grid-template-columns: repeat(3, 1fr); }
+    .content-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    nav.links, .nav-actions .btn-outline { display: none; }
+    .hamburger { display: block; }
+    section { padding: 70px 6vw; }
+    .state-grid { grid-template-columns: repeat(2, 1fr); }
+    .content-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .row2 { grid-template-columns: 1fr; }
+    .hero-meta { gap: 24px; }
+    .stamp { display: none; }
+    .channel-cta { flex-direction: column; align-items: flex-start; }
+  }
+
+  .mobile-menu {
+    display:none; flex-direction:column; gap: 4px; padding: 10px 6vw 18px; border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { padding: 12px 4px; font-weight: 700; border-bottom: 1px solid var(--border); }
+  .mobile-menu .btn { margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="mark">US</span>Unfiltered Shreyash</a>
+    <nav class="links">
+      <a href="#states">States</a>
+      <a href="#content">Vlogs &amp; Blogs</a>
+      <a href="#why">Journey</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+      <a href="#contact" class="btn btn-outline">Collaborate</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#states">States</a>
+    <a href="#content">Vlogs &amp; Blogs</a>
+    <a href="#why">Journey</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="btn btn-primary">Collaborate with me</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker">Full-time traveler · vlogger · blogger</span>
+        <h1 class="hero-title">Bharat, seen one<br><em>state</em> at a time.</h1>
+        <p class="hero-sub">I'm Shreyash Waghmare — I quit the 9-to-5 plan to travel India full-time, filming daily vlogs for <strong>Unfiltered Shreyash</strong> on YouTube and writing the stories in between on <strong>Shreyash Vlogs</strong>, my Blogger journal.</p>
+        <div class="hero-ctas">
+          <a href="https://www.youtube.com/@yashwaghmare0902" class="btn btn-primary" target="_blank" rel="noopener">▶ Watch the latest vlog</a>
+          <a href="https://unfilteredshreyash.blogspot.com/" class="btn btn-outline" target="_blank" rel="noopener">Read the blog</a>
+        </div>
+        <div class="hero-meta">
+          <div class="stat"><b>12</b><span>states explored</span></div>
+          <div class="stat"><b>56</b><span>vlogs on YouTube</span></div>
+          <div class="stat"><b>142+</b><span>subscribers &amp; growing</span></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="stamp" style="width:108px; height:108px; top:-18px; left:-10px; font-size:.72rem; padding:10px;">EST.<br>ON<br>THE ROAD</div>
+        <div class="stamp" style="width:86px; height:86px; bottom:-14px; right:6px; font-size:.62rem; padding:8px; transform:rotate(10deg);">12 STATES<br>&amp; COUNTING</div>
+        <div class="hero-map-box">
+          <svg viewBox="0 0 420 460" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrated route across India connecting the states visited">
+            <path d="M170 40 L120 95 L150 150 L90 190 L130 230 L100 280 L160 310 L150 370 L210 400 L260 350 L300 380 L330 320 L290 270 L330 220 L280 180 L300 120 L240 90 L230 40 Z"
+              fill="var(--bg-soft)" stroke="var(--border)" stroke-width="2"/>
+            <g stroke="var(--saffron-deep)" stroke-width="2.5" stroke-dasharray="1 8" stroke-linecap="round" fill="none">
+              <path d="M150 60 L120 130 L160 190 L130 250 L165 300 L200 360 L255 340 L300 300 L270 230 L240 150 L200 90 Z"/>
+            </g>
+            <g fill="var(--madder)">
+              <circle cx="150" cy="60" r="6"/>
+              <circle cx="120" cy="130" r="6"/>
+              <circle cx="160" cy="190" r="6"/>
+              <circle cx="130" cy="250" r="6"/>
+              <circle cx="165" cy="300" r="6"/>
+              <circle cx="200" cy="360" r="6"/>
+              <circle cx="255" cy="340" r="6"/>
+              <circle cx="300" cy="300" r="6"/>
+              <circle cx="270" cy="230" r="6"/>
+              <circle cx="240" cy="150" r="6"/>
+              <circle cx="200" cy="90" r="6"/>
+            </g>
+            <circle cx="150" cy="60" r="11" fill="none" stroke="var(--peacock)" stroke-width="2"/>
+            <text x="20" y="430" fill="var(--text-soft)" font-family="Karla" font-size="13" font-style="italic">— the trail so far, drawn by hand —</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Maharashtra</span><span>·</span><span>Madhya Pradesh</span><span>·</span><span>Uttar Pradesh</span><span>·</span>
+      <span>Himachal Pradesh</span><span>·</span><span>Gujarat</span><span>·</span><span>Assam</span><span>·</span>
+      <span>West Bengal</span><span>·</span><span>Chhattisgarh</span><span>·</span><span>Punjab</span><span>·</span>
+      <span>Jharkhand</span><span>·</span><span>Uttarakhand</span><span>·</span><span>Tripura</span><span>·</span>
+      <span>Maharashtra</span><span>·</span><span>Madhya Pradesh</span><span>·</span><span>Uttar Pradesh</span><span>·</span>
+      <span>Himachal Pradesh</span><span>·</span><span>Gujarat</span><span>·</span><span>Assam</span><span>·</span>
+      <span>West Bengal</span><span>·</span><span>Chhattisgarh</span><span>·</span><span>Punjab</span><span>·</span>
+      <span>Jharkhand</span><span>·</span><span>Uttarakhand</span><span>·</span><span>Tripura</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-portrait">"Vlogging isn't my side project — it's the whole plan. Full-time, on the road, unfiltered."</div>
+      <div>
+        <span class="eyebrow section-head" style="display:block; margin-bottom:10px; font-weight:700;">The person behind the camera</span>
+        <h2 style="font-size: clamp(1.8rem,3vw,2.4rem); margin-bottom:18px;">Hi, I'm Shreyash — I turned a hobby into a full-time life on the road.</h2>
+        <p>What started as weekend trips with a phone camera turned into a daily habit of packing a bag, hitting record, and figuring out the story as I go. No scripts, no filters — just real roads, real people, and real Bharat.</p>
+        <p>Today, travel isn't something I do between jobs — it <em>is</em> the job. Every vlog on <strong>Unfiltered Shreyash</strong> and every post on <strong>Shreyash Vlogs</strong> is one more page of a journey to see every corner of this country, up close.</p>
+        <div class="about-facts">
+          <div class="fact"><b>Daily vlogger</b><span>New YouTube upload, every single day</span></div>
+          <div class="fact"><b>Blogger &amp; writer</b><span>Longer stories, guides &amp; tips on Blogger</span></div>
+          <div class="fact"><b>12 states</b><span>Covered across Bharat so far</span></div>
+          <div class="fact"><b>Open to collabs</b><span>State tourism, brands &amp; destinations</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATES -->
+  <section id="states">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The journey so far</span>
+        <h2>12 states down, all of Bharat to go.</h2>
+        <p>Every state gets its own set of vlogs and a written diary on the blog — food, culture, routes, and the people who made it memorable.</p>
+      </div>
+      <div class="states-progress">
+        <div class="progress-bar"><div class="progress-fill" style="width:33%"></div></div>
+        <span class="progress-label">12 states explored · more added every trip</span>
+      </div>
+      <div class="state-grid">
+        <div class="state-card"><span class="num">01</span><h3>Maharashtra</h3><span class="region">Home turf</span></div>
+        <div class="state-card"><span class="num">02</span><h3>Madhya Pradesh</h3><span class="region">Heart of India</span></div>
+        <div class="state-card"><span class="num">03</span><h3>Uttar Pradesh</h3><span class="region">North</span></div>
+        <div class="state-card"><span class="num">04</span><h3>Himachal Pradesh</h3><span class="region">Himalayas</span></div>
+        <div class="state-card"><span class="num">05</span><h3>Gujarat</h3><span class="region">West</span></div>
+        <div class="state-card"><span class="num">06</span><h3>Assam</h3><span class="region">Northeast</span></div>
+        <div class="state-card"><span class="num">07</span><h3>West Bengal</h3><span class="region">East</span></div>
+        <div class="state-card"><span class="num">08</span><h3>Chhattisgarh</h3><span class="region">Central</span></div>
+        <div class="state-card"><span class="num">09</span><h3>Punjab</h3><span class="region">North</span></div>
+        <div class="state-card"><span class="num">10</span><h3>Jharkhand</h3><span class="region">East</span></div>
+        <div class="state-card"><span class="num">11</span><h3>Uttarakhand</h3><span class="region">Himalayas</span></div>
+        <div class="state-card"><span class="num">12</span><h3>Tripura</h3><span class="region">Northeast</span></div>
+        <div class="state-card next"><span class="num">next</span><h3>Where next?</h3><span class="region" style="color:var(--text-soft);">Suggest a state ↓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT: vlogs + blogs -->
+  <section class="about" id="content">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Watch &amp; read</span>
+        <h2>Vlogs on YouTube, stories on the blog.</h2>
+        <p>A daily video diary on <strong>Unfiltered Shreyash</strong>, and deeper written guides on <strong>Shreyash Vlogs</strong> for the trips you want to plan yourself.</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="videos">Latest vlogs</button>
+        <button class="tab-btn" data-tab="blogs">Latest blog posts</button>
+      </div>
+
+      <div class="content-grid" id="videosGrid">
+        <a class="card-link" href="https://www.youtube.com/watch?v=VBZd84DqeKA" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--madder),var(--saffron));"><span class="play">▶</span><span class="dur">8:16</span></div>
+          <div class="content-body"><span class="tag">Pune · Maharashtra</span><h3>Kothrud Ganpati Darshan Vlog</h3><p>Visiting four Ganpati mandals across Pune during Ganeshotsav.</p></div>
+        </div></a>
+        <a class="card-link" href="https://www.youtube.com/watch?v=QX7y8xrOhGc" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--peacock),var(--ink));"><span class="play">▶</span><span class="dur">4:44</span></div>
+          <div class="content-body"><span class="tag">Pune · Maharashtra</span><h3>21,000 Panipuris — a Ganpati Idol</h3><p>A giant Ganpati murti made entirely from panipuris, Pune Ganpati 2026.</p></div>
+        </div></a>
+        <a class="card-link" href="https://www.youtube.com/watch?v=UpsMDGGMe7M" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--saffron),var(--peacock));"><span class="play">▶</span><span class="dur">14:04</span></div>
+          <div class="content-body"><span class="tag">Pune · Maharashtra</span><h3>Dagdusheth Halwai Ganpati Agaman</h3><p>Inside the grand arrival procession of Shrimant Dagdusheth Halwai Ganpati.</p></div>
+        </div></a>
+        <a class="card-link" href="https://www.youtube.com/watch?v=kN76MKe-bqo" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--ink),var(--madder));"><span class="play">▶</span><span class="dur">10:41</span></div>
+          <div class="content-body"><span class="tag">Nagpur · Maharashtra</span><h3>Koradi Temple, Nagpur</h3><p>A visit to one of Nagpur's most striking temple complexes.</p></div>
+        </div></a>
+        <a class="card-link" href="https://www.youtube.com/watch?v=stqBf96NMf8" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--peacock),var(--saffron));"><span class="play">▶</span><span class="dur">7:05</span></div>
+          <div class="content-body"><span class="tag">Rishikesh · Uttarakhand</span><h3>Triveni Ghat Ganga Aarti, Part 2</h3><p>The evening Ganga aarti at Triveni Ghat, Rishikesh.</p></div>
+        </div></a>
+        <a class="card-link" href="https://www.youtube.com/watch?v=Jqp89t0NPwY" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--madder),var(--ink));"><span class="play">▶</span><span class="dur">9:34</span></div>
+          <div class="content-body"><span class="tag">Melghat · Maharashtra</span><h3>Melghat Tiger Reserve</h3><p>Into the forest at Melghat, tracking sights of the tiger reserve.</p></div>
+        </div></a>
+      </div>
+
+      <div class="content-grid" id="blogsGrid" style="display:none;">
+        <a class="card-link" href="https://unfilteredshreyash.blogspot.com/2026/09/pune-ganeshotsav-2026-dagdusheth_01880960139.html" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--ink),var(--madder));"><span style="position:absolute; font-size:2rem;">✎</span></div>
+          <div class="content-body"><span class="tag">Sep 22, 2026 · Pune</span><h3>Pune Ganeshotsav 2026: Dagdusheth Ganpati</h3><p>A complete travel and cultural guide to Pune's biggest Ganesh festival.</p></div>
+        </div></a>
+        <a class="card-link" href="https://unfilteredshreyash.blogspot.com/2026/09/kashi-vishwanath-temple-kothrud-pune.html" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--peacock),var(--saffron));"><span style="position:absolute; font-size:2rem;">✎</span></div>
+          <div class="content-body"><span class="tag">Sep 21, 2026 · Kothrud, Pune</span><h3>Kashi Vishwanath Temple Kothrud, Pune</h3><p>Inside the Sai Mitra Mandal's Kashi Vishwanath–themed Ganpati decoration.</p></div>
+        </div></a>
+        <a class="card-link" href="https://unfilteredshreyash.blogspot.com/2026/09/kothrud-ganpati-darshan-2026-4-ganpati.html" target="_blank" rel="noopener"><div class="content-card">
+          <div class="thumb" style="background:linear-gradient(140deg,var(--madder),var(--ink));"><span style="position:absolute; font-size:2rem;">✎</span></div>
+          <div class="content-body"><span class="tag">Sep 20, 2026 · Kothrud, Pune</span><h3>Kothrud Ganpati Darshan 2026</h3><p>A walk through four Ganpati mandals in Kothrud, Pune.</p></div>
+        </div></a>
+      </div>
+
+      <div class="channel-cta">
+        <div>
+          <h3>Come along on YouTube &amp; Blogger</h3>
+          <p>New vlog every day on <strong>Unfiltered Shreyash</strong> · new stories on <strong>Shreyash Vlogs</strong></p>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="https://www.youtube.com/@yashwaghmare0902" class="btn btn-primary" target="_blank" rel="noopener">Subscribe on YouTube</a>
+          <a href="https://unfilteredshreyash.blogspot.com/" class="btn btn-outline" style="border-color:#fff8ee; color:#fff8ee;" target="_blank" rel="noopener">Visit the blog</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FULL TIME -->
+  <section id="why">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The plan</span>
+        <h2>Why I'm doing this full-time.</h2>
+        <p>Travel content isn't a phase for me — it's the career. Here's what that means in practice.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card"><span class="icon">🎥</span><h3>Consistency over perfection</h3><p>A daily upload schedule, even on the slow travel days — that's how the channel actually grows.</p></div>
+        <div class="why-card"><span class="icon">🗺️</span><h3>All of Bharat, eventually</h3><p>The goal is every state, not just the popular ones — including the places most vloggers skip.</p></div>
+        <div class="why-card"><span class="icon">🤝</span><h3>Open to the right partners</h3><p>Working with state tourism boards, local businesses and travel brands to tell better stories.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / COLLAB -->
+  <section class="about" id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-info">
+        <span class="eyebrow" style="font-weight:700; display:block; margin-bottom:10px;">Let's work together</span>
+        <h2>Promoting a state or a destination? Let's talk.</h2>
+        <p>Tourism boards, hotels, local businesses and brands — if you want your state or country covered honestly, on camera and in writing, this is the place to start.</p>
+        <div class="contact-links">
+          <a class="contact-link" href="tel:+917249610733"><span class="ico">📞</span><span>+91 72496 10733<small>Call directly</small></span></a>
+          <a class="contact-link" id="waLink" href="#" target="_blank" rel="noopener"><span class="ico">💬</span><span>Message on WhatsApp<small>Fastest way to reach me</small></span></a>
+          <a class="contact-link" href="https://www.youtube.com/@yashwaghmare0902" target="_blank" rel="noopener"><span class="ico">▶</span><span>Unfiltered Shreyash<small>YouTube channel</small></span></a>
+          <a class="contact-link" href="https://unfilteredshreyash.blogspot.com/" target="_blank" rel="noopener"><span class="ico">✎</span><span>Shreyash Vlogs<small>Blogger — Unfiltered Shreyash</small></span></a>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Invite me to your state</h3>
+        <p class="hint">Fill this in and it opens a pre-filled WhatsApp message straight to me — no email needed.</p>
+        <form id="collabForm">
+          <div class="row2">
+            <div>
+              <label for="fname">Your name</label>
+              <input id="fname" type="text" placeholder="Full name" required>
+            </div>
+            <div>
+              <label for="forg">Organisation (optional)</label>
+              <input id="forg" type="text" placeholder="Tourism board / brand / personal">
+            </div>
+          </div>
+          <div class="row2">
+            <div>
+              <label for="fplace">State / country to promote</label>
+              <input id="fplace" type="text" placeholder="e.g. Kerala, or Nepal" required>
+            </div>
+            <div>
+              <label for="ftype">What's this about?</label>
+              <select id="ftype">
+                <option>Tourism promotion</option>
+                <option>Brand collaboration</option>
+                <option>Hotel / stay review</option>
+                <option>Just saying hi</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="fmsg">Message</label>
+            <textarea id="fmsg" placeholder="Tell me a bit about what you have in mind..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="justify-content:center;">Send via WhatsApp</button>
+          <p class="form-note">This opens WhatsApp with your message ready to send to +91 72496 10733.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <a href="#top" class="brand"><span class="mark" style="width:28px;height:28px;font-size:.65rem;">US</span>Unfiltered Shreyash</a>
+    <div class="footer-social">
+      <a href="https://www.youtube.com/@yashwaghmare0902" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://unfilteredshreyash.blogspot.com/" target="_blank" rel="noopener">Blogger</a>
+      <a href="tel:+917249610733">Call</a>
+      <a href="#contact">Collaborate</a>
+    </div>
+  </div>
+  <div class="footer-inner" style="margin-top:18px; padding-top:18px; border-top:1px solid var(--border);">
+    <div class="footer-social" style="flex-wrap:wrap;">
+      <a href="https://unfilteredshreyash.blogspot.com/p/about-us.html" target="_blank" rel="noopener">About Us</a>
+      <a href="https://unfilteredshreyash.blogspot.com/p/contact-us.html" target="_blank" rel="noopener">Contact Us</a>
+      <a href="https://unfilteredshreyash.blogspot.com/p/privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a>
+      <a href="https://unfilteredshreyash.blogspot.com/p/disclaimer.html" target="_blank" rel="noopener">Disclaimer</a>
+      <a href="https://unfilteredshreyash.blogspot.com/p/terms-conditions.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© <span id="year"></span> Shreyash Waghmare · Unfiltered Shreyash. Made for the road, one state at a time.</p>
+</footer>
+
+<div class="wa-float">
+  <div class="wa-panel" id="waPanel">
+    <h4>Say hello 👋</h4>
+    <p>Questions, collabs, or just want to say the vlog made your day — message me directly.</p>
+    <a class="btn btn-primary" id="waPanelLink" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+  </div>
+  <button class="wa-btn" id="waToggle" aria-label="Open WhatsApp chat">💬</button>
+</div>
+
+<div class="toast" id="toast">Message ready — opening WhatsApp…</div>
+
+<script>
+  // ---- Theme ----
+  (function initTheme(){
+    var saved = null;
+    try { saved = localStorage.getItem('us-theme'); } catch(e) {}
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = saved || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    updateToggleIcon(theme);
+  })();
+
+  function updateToggleIcon(theme){
+    var btn = document.getElementById('themeToggle');
+    if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    var current = document.documentElement.getAttribute('data-theme') || 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    updateToggleIcon(next);
+    try { localStorage.setItem('us-theme', next); } catch(e) {}
+  });
+
+  // ---- Mobile menu ----
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', function(){
+    var isOpen = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ mobileMenu.classList.remove('open'); });
+  });
+
+  // ---- Tabs ----
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var videosGrid = document.getElementById('videosGrid');
+  var blogsGrid = document.getElementById('blogsGrid');
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      if (btn.dataset.tab === 'videos') {
+        videosGrid.style.display = 'grid';
+        blogsGrid.style.display = 'none';
+      } else {
+        videosGrid.style.display = 'none';
+        blogsGrid.style.display = 'grid';
+      }
+    });
+  });
+
+  // ---- WhatsApp ----
+  var WA_NUMBER = '917249610733';
+  function waHref(text){
+    return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
+  }
+  document.getElementById('waLink').href = waHref("Hi Shreyash! I'd love to connect about a collaboration.");
+  document.getElementById('waPanelLink').href = waHref("Hi Shreyash! Loved your vlogs, wanted to reach out.");
+
+  var waToggle = document.getElementById('waToggle');
+  var waPanel = document.getElementById('waPanel');
+  waToggle.addEventListener('click', function(){
+    waPanel.classList.toggle('open');
+  });
+  document.addEventListener('click', function(e){
+    if (!waPanel.contains(e.target) && e.target !== waToggle && waPanel.classList.contains('open')) {
+      waPanel.classList.remove('open');
+    }
+  });
+
+  // ---- Collab form -> WhatsApp ----
+  var form = document.getElementById('collabForm');
+  var toast = document.getElementById('toast');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('fname').value.trim();
+    var org = document.getElementById('forg').value.trim();
+    var place = document.getElementById('fplace').value.trim();
+    var type = document.getElementById('ftype').value;
+    var msg = document.getElementById('fmsg').value.trim();
+
+    var text = "Hi Shreyash! I'm " + name + (org ? " from " + org : "") +
+      ". I'd like to talk about: " + type + " — for " + place + ". " + msg;
+
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); }, 2600);
+
+    window.open(waHref(text), '_blank', 'noopener');
+    form.reset();
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
