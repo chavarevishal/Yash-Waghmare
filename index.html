@@ -353,6 +353,253 @@
   .mobile-menu.open { display:flex; }
   .mobile-menu a { padding: 12px 4px; font-weight: 700; border-bottom: 1px solid var(--border); }
   .mobile-menu .btn { margin-top: 10px; }
+
+  /* ---------- PREMIUM PHOTO GALLERY ---------- */
+  .photo-gallery { background: var(--bg); overflow: hidden; }
+  .gallery-shell { max-width: 1280px; margin: 0 auto; }
+  .gallery-head { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:28px; }
+  .gallery-head-copy { max-width:720px; }
+  .gallery-kicker { display:inline-flex; align-items:center; gap:9px; color:var(--madder); font-size:.78rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px; }
+  .gallery-kicker::before { content:''; width:28px; height:2px; background:linear-gradient(90deg,var(--madder),var(--saffron)); }
+  .gallery-title { font-size:clamp(2.15rem,5vw,4rem); }
+  .gallery-title em { color:var(--madder); font-style:italic; }
+  .gallery-sub { color:var(--text-soft); margin-top:13px; max-width:62ch; font-size:1.02rem; }
+  .gallery-controls { display:flex; gap:10px; flex:0 0 auto; }
+  .gallery-arrow { width:48px; height:48px; border:1px solid var(--border); border-radius:50%; background:var(--surface); color:var(--text); display:grid; place-items:center; cursor:pointer; font-size:1.2rem; transition:transform .2s ease, border-color .2s ease, background .2s ease; }
+  .gallery-arrow:hover { transform:translateY(-3px); border-color:var(--saffron); background:var(--bg-soft); }
+  .gallery-scroller { display:flex; gap:20px; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding:8px 8vw 28px; margin:0 -8vw; scrollbar-width:none; cursor:grab; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; }
+  .gallery-scroller::-webkit-scrollbar { display:none; }
+  .gallery-scroller.dragging { cursor:grabbing; scroll-behavior:auto; scroll-snap-type:none; }
+  .gallery-card { position:relative; flex:0 0 min(82vw, 920px); aspect-ratio:16/9; scroll-snap-align:center; border-radius:28px; overflow:hidden; background:#111; border:1px solid var(--border); box-shadow:0 24px 60px -34px rgba(0,0,0,.7); isolation:isolate; transform:scale(.965); transition:transform .45s ease, box-shadow .45s ease; user-select:none; }
+  .gallery-card.active { transform:scale(1); box-shadow:0 30px 80px -38px rgba(0,0,0,.82); }
+  .gallery-card img { width:100%; height:100%; object-fit:cover; transition:transform .8s cubic-bezier(.2,.75,.2,1), filter .5s ease; pointer-events:none; }
+  .gallery-card:hover img { transform:scale(1.045); }
+  .gallery-card::after { content:''; position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(0,0,0,.03) 30%,rgba(0,0,0,.78) 100%); pointer-events:none; }
+  .gallery-number { position:absolute; z-index:3; top:18px; left:18px; padding:7px 11px; border-radius:999px; color:#fff; background:rgba(0,0,0,.38); border:1px solid rgba(255,255,255,.3); backdrop-filter:blur(10px); font-size:.74rem; font-weight:800; letter-spacing:.08em; }
+  .gallery-expand { position:absolute; z-index:4; top:18px; right:18px; width:44px; height:44px; border:1px solid rgba(255,255,255,.35); border-radius:50%; background:rgba(0,0,0,.34); color:#fff; backdrop-filter:blur(10px); cursor:pointer; display:grid; place-items:center; font-size:1.05rem; transition:transform .2s ease, background .2s ease; }
+  .gallery-expand:hover { transform:scale(1.08); background:rgba(0,0,0,.55); }
+  .gallery-caption { position:absolute; z-index:3; left:28px; right:28px; bottom:24px; color:#fff; display:flex; align-items:flex-end; justify-content:space-between; gap:18px; }
+  .gallery-caption small { display:block; color:rgba(255,255,255,.78); font-size:.76rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; margin-bottom:7px; }
+  .gallery-caption h3 { color:#fff; font-size:clamp(1.4rem,3vw,2.35rem); text-shadow:0 2px 18px rgba(0,0,0,.3); }
+  .gallery-caption p { color:rgba(255,255,255,.82); margin-top:5px; font-size:.92rem; max-width:52ch; }
+  .gallery-meta { display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+  .gallery-status { display:flex; align-items:center; gap:12px; margin-top:4px; }
+  .gallery-progress { height:5px; flex:1; min-width:120px; background:var(--bg-soft); border-radius:99px; overflow:hidden; border:1px solid var(--border); }
+  .gallery-progress span { display:block; height:100%; width:25%; background:linear-gradient(90deg,var(--madder),var(--saffron)); transition:width .35s ease; }
+  .gallery-counter { font-size:.8rem; font-weight:800; color:var(--text-soft); white-space:nowrap; }
+  .gallery-dots { display:flex; justify-content:center; align-items:center; gap:8px; margin-top:4px; }
+  .gallery-dot { width:8px; height:8px; border:0; padding:0; border-radius:50%; background:var(--border); cursor:pointer; transition:width .25s ease, background .25s ease; }
+  .gallery-dot.active { width:28px; border-radius:999px; background:linear-gradient(90deg,var(--madder),var(--saffron)); }
+  .gallery-hint { text-align:center; color:var(--text-soft); font-size:.78rem; margin-top:14px; }
+
+  .gallery-lightbox { position:fixed; inset:0; z-index:1000; background:rgba(7,9,18,.92); backdrop-filter:blur(16px); display:none; align-items:center; justify-content:center; padding:30px; }
+  .gallery-lightbox.open { display:flex; animation:galleryFade .22s ease; }
+  @keyframes galleryFade { from{opacity:0} to{opacity:1} }
+  .lightbox-image-wrap { position:relative; width:min(1200px,92vw); height:min(82vh,820px); display:grid; place-items:center; }
+  .lightbox-image { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; border-radius:18px; box-shadow:0 30px 100px rgba(0,0,0,.6); }
+  .lightbox-close,.lightbox-prev,.lightbox-next { position:absolute; z-index:3; width:48px; height:48px; border:1px solid rgba(255,255,255,.25); border-radius:50%; background:rgba(0,0,0,.35); color:#fff; cursor:pointer; display:grid; place-items:center; backdrop-filter:blur(8px); }
+  .lightbox-close { top:16px; right:16px; font-size:1.25rem; }
+  .lightbox-prev { left:18px; top:50%; transform:translateY(-50%); font-size:1.2rem; }
+  .lightbox-next { right:18px; top:50%; transform:translateY(-50%); font-size:1.2rem; }
+  .lightbox-close:hover,.lightbox-prev:hover,.lightbox-next:hover { background:rgba(255,255,255,.14); }
+  .lightbox-label { position:absolute; left:50%; bottom:-35px; transform:translateX(-50%); color:#fff; font-size:.85rem; white-space:nowrap; opacity:.8; }
+
+  @media (max-width:720px) {
+    .gallery-head { align-items:flex-start; flex-direction:column; }
+    .gallery-controls { width:100%; justify-content:flex-end; }
+    .gallery-scroller { gap:12px; padding:6px 5vw 22px; margin:0 -5vw; }
+    .gallery-card { flex-basis:88vw; aspect-ratio:4/5; border-radius:22px; transform:scale(.98); }
+    .gallery-card img { object-position:center; }
+    .gallery-caption { left:18px; right:18px; bottom:18px; }
+    .gallery-caption h3 { font-size:1.45rem; }
+    .gallery-caption p { font-size:.82rem; }
+    .gallery-number { top:12px; left:12px; }
+    .gallery-expand { top:12px; right:12px; }
+    .gallery-meta { display:none; }
+    .gallery-progress { min-width:0; }
+    .lightbox-image-wrap { width:100%; height:78vh; }
+    .lightbox-prev,.lightbox-next { width:42px; height:42px; }
+    .lightbox-prev { left:6px; }
+    .lightbox-next { right:6px; }
+    .gallery-hint { padding:0 12px; }
+  }
+
+
+
+  /* =========================================================
+     MODERN TRAVEL CREATOR REDESIGN
+     ========================================================= */
+  :root{
+    --travel-black:#0b0f12;
+    --travel-white:#fffdf8;
+    --travel-muted:#756f63;
+    --travel-line:rgba(20,24,25,.12);
+    --travel-accent:#ef6b3b;
+    --travel-accent-2:#f4b544;
+    --travel-green:#214f46;
+  }
+  body{background:#fbf8f1; color:#151719;}
+  body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.22;background-image:radial-gradient(rgba(20,20,20,.09) .7px,transparent .7px);background-size:7px 7px;}
+  header.nav{background:rgba(251,248,241,.76);border-bottom:1px solid rgba(20,24,25,.09);box-shadow:0 8px 35px rgba(0,0,0,.04)}
+  .nav-inner{max-width:1320px;padding:14px 5vw}
+  .brand{letter-spacing:-.025em;font-size:1.18rem}
+  .brand .mark{width:38px;height:38px;background:linear-gradient(135deg,#ef6b3b,#f4b544);box-shadow:0 8px 22px rgba(239,107,59,.25)}
+  nav.links{gap:30px}
+  nav.links a{font-size:.86rem;text-transform:uppercase;letter-spacing:.08em}
+  .btn{box-shadow:0 8px 20px rgba(0,0,0,.06);transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(0,0,0,.10)}
+  .btn-primary{background:#171b1d;color:#fff}
+  .btn-primary:hover{background:#ef6b3b}
+  .btn-outline{border-color:rgba(20,24,25,.18)}
+
+  section{padding:110px 5vw}
+  .wrap{max-width:1320px}
+  .hero{padding:42px 5vw 88px;min-height:760px;display:flex;align-items:center;overflow:clip;background:linear-gradient(180deg,#fbf8f1 0%,#f7f1e5 100%)}
+  .hero-grid{max-width:1320px;width:100%;grid-template-columns:.82fr 1.18fr;gap:70px}
+  .kicker{font-size:.72rem;text-transform:uppercase;letter-spacing:.18em;color:#ef6b3b;margin-bottom:22px}
+  .kicker::before{width:32px;height:2px;background:#ef6b3b}
+  h1.hero-title{font-size:clamp(3.3rem,7vw,7rem);letter-spacing:-.055em;line-height:.91;max-width:720px}
+  h1.hero-title em{color:#ef6b3b}
+  .hero-sub{font-size:1.08rem;line-height:1.75;max-width:58ch;color:#6d685d}
+  .hero-ctas{margin-top:30px}
+  .hero-meta{border-top:1px solid rgba(20,24,25,.13);padding-top:25px;margin-top:38px;gap:38px}
+  .hero-meta .stat b{font-size:1.7rem}
+  .hero-meta .stat span{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+
+  /* cinematic hero image */
+  .hero-art{min-height:610px;display:flex;align-items:center;justify-content:center;position:relative}
+  .hero-art .hero-map-box{display:block;width:min(100%,720px);height:610px;padding:0;border:0;border-radius:34px;overflow:hidden;position:relative;background:#222;box-shadow:0 38px 90px -38px rgba(0,0,0,.5)}
+  .hero-art .hero-map-box:before{content:"";position:absolute;inset:0;background-image:url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiOW6ww6vzpOrC4wDlvRjj_id1YNij15fBGxcP6vMTMUz-xJPWhJFQKRLK2e_7bXY35N5pfu0oAJqquZwHMYsjEXfqHC2cwucG-_CS9jnnP8XQNbST_YT05e1fb9RRy2Cypcc2k_wc4Gpe5mofl2rwM4IRYgDJ2PTDuQmHbi1x-Bks5d-CdAMNRO-B5Eh1O/s1280/WhatsApp%20Image%202026-09-30%20at%2017.23.58.jpeg");background-size:cover;background-position:center;transform:scale(1.02);filter:saturate(.95)}
+  .hero-art .hero-map-box:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 20%,rgba(0,0,0,.72) 100%)}
+  .hero-art .hero-map-box svg{display:none}
+  .hero-art .hero-map-box:after{pointer-events:none}
+  .hero-art:after{content:"TRAVEL DIARY · INDIA";position:absolute;right:-8px;bottom:42px;z-index:5;background:#fffdf8;color:#171b1d;padding:12px 17px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.16em;box-shadow:0 15px 30px rgba(0,0,0,.16)}
+  .hero-art:before{content:"EVERY ROAD HAS A STORY";position:absolute;left:-24px;top:75px;z-index:5;writing-mode:vertical-rl;transform:rotate(180deg);font-size:.65rem;font-weight:800;letter-spacing:.2em;color:#ef6b3b}
+  .stamp{z-index:8;border-color:#fff;background:rgba(255,255,255,.1);color:#fff;backdrop-filter:blur(8px)}
+  .hero-art .stamp:first-child{left:-18px;top:25px}
+  .hero-art .stamp:nth-child(2){right:-10px;bottom:0}
+
+  .marquee{background:#171b1d;border-color:#171b1d;padding:15px 0}
+  .marquee-track span{color:#eee8dc;font-size:1rem;text-transform:uppercase;letter-spacing:.12em}
+
+  .section-head{margin-bottom:45px}
+  .section-head .eyebrow{color:#ef6b3b;text-transform:uppercase;letter-spacing:.16em;font-size:.7rem}
+  .section-head h2{font-size:clamp(2.4rem,5vw,4.4rem);letter-spacing:-.045em}
+  .section-head p{font-size:1rem;color:#756f63;max-width:58ch}
+
+  /* about becomes editorial */
+  .about{background:#f0eadf}
+  .about-grid{grid-template-columns:.75fr 1.25fr;gap:80px}
+  .about-portrait{border-radius:28px;min-height:560px;background:linear-gradient(155deg,#ef6b3b,#1f4f46);box-shadow:0 30px 70px -35px rgba(0,0,0,.45)}
+  .about p{color:#686257}
+  .fact{border-left:2px solid #ef6b3b}
+
+  /* state cards = travel destination cards */
+  .state-grid{gap:14px}
+  .state-card{min-height:150px;border-radius:20px;background:rgba(255,255,255,.62);border-color:rgba(20,24,25,.10);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+  .state-card:hover{transform:translateY(-7px) rotate(-.3deg);box-shadow:0 22px 45px -28px rgba(0,0,0,.35);border-color:#ef6b3b}
+  .state-card h3{font-size:1.18rem}
+  .state-card .region{color:#1f6257;text-transform:uppercase;letter-spacing:.08em;font-size:.68rem}
+  .state-card::after{color:#ef6b3b}
+
+  /* content cards */
+  .content-card{border-radius:22px;background:#fffdf8;border-color:rgba(20,24,25,.1);box-shadow:0 10px 30px rgba(0,0,0,.04);transition:transform .25s ease,box-shadow .25s ease}
+  a.card-link:hover .content-card{transform:translateY(-8px);border-color:#ef6b3b;box-shadow:0 25px 50px -30px rgba(0,0,0,.4)}
+  .thumb{border-radius:0}
+  .content-body h3{font-size:1.2rem;letter-spacing:-.02em}
+  .content-body .tag{color:#ef6b3b;text-transform:uppercase;letter-spacing:.09em;font-size:.67rem}
+  .channel-cta{border-radius:28px;background:#171b1d;padding:38px 40px;box-shadow:0 28px 65px -40px rgba(0,0,0,.55)}
+
+  /* =========================================================
+     PHOTO JOURNAL — editorial / cinematic slider
+     ========================================================= */
+  .photo-gallery{background:#171b1d;color:#fff;padding-top:120px;padding-bottom:125px;overflow:hidden}
+  .photo-gallery .gallery-title{color:#fff;font-size:clamp(2.8rem,6vw,5.8rem);letter-spacing:-.055em;line-height:.94}
+  .photo-gallery .gallery-title em{color:#f4b544}
+  .photo-gallery .gallery-sub{color:#aaa79e}
+  .gallery-kicker{color:#f4b544}
+  .gallery-kicker::before{background:#f4b544}
+  .gallery-arrow{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16);color:#fff;width:54px;height:54px}
+  .gallery-arrow:hover{background:#ef6b3b;border-color:#ef6b3b}
+  .gallery-scroller{padding:20px 12vw 45px;margin:0 -12vw;gap:26px}
+  .gallery-card{flex-basis:min(76vw,1060px);aspect-ratio:16/9;border-radius:30px;border:1px solid rgba(255,255,255,.14);box-shadow:0 35px 90px -45px rgba(0,0,0,.95);transform:scale(.92);opacity:.72;filter:saturate(.72)}
+  .gallery-card.active{transform:scale(1);opacity:1;filter:saturate(1);box-shadow:0 45px 100px -45px rgba(0,0,0,.95)}
+  .gallery-card img{transition:transform 1s cubic-bezier(.2,.8,.2,1),filter .5s ease}
+  .gallery-card.active:hover img{transform:scale(1.035)}
+  .gallery-card:after{background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.88) 100%)}
+  .gallery-caption{left:34px;right:34px;bottom:30px}
+  .gallery-caption small{color:#f4b544;letter-spacing:.18em}
+  .gallery-caption h3{font-size:clamp(1.6rem,3.4vw,3rem);letter-spacing:-.035em}
+  .gallery-caption p{color:rgba(255,255,255,.7)}
+  .gallery-number{background:rgba(0,0,0,.24);border-color:rgba(255,255,255,.25)}
+  .gallery-expand{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.28)}
+  .gallery-progress{background:rgba(255,255,255,.1);border:0}
+  .gallery-progress span{background:linear-gradient(90deg,#ef6b3b,#f4b544)}
+  .gallery-counter{color:#aaa79e}
+  .gallery-dot{background:rgba(255,255,255,.25)}
+  .gallery-dot.active{background:#f4b544}
+  .gallery-hint{color:#85827a;text-transform:uppercase;letter-spacing:.12em;font-size:.62rem}
+
+  /* why section */
+  #why{background:#fbf8f1}
+  .why-card{border-radius:24px;background:#fffdf8;border-color:rgba(20,24,25,.1);padding:32px;transition:transform .25s ease,box-shadow .25s ease}
+  .why-card:hover{transform:translateY(-7px);box-shadow:0 25px 55px -32px rgba(0,0,0,.35)}
+  .why-card .icon{font-size:1.8rem}
+
+  .contact-grid{gap:70px}
+  .form-card{border-radius:28px;background:#fffdf8;border-color:rgba(20,24,25,.1);box-shadow:0 25px 60px -38px rgba(0,0,0,.25)}
+  .contact-link{border-radius:16px;background:rgba(255,255,255,.62);border-color:rgba(20,24,25,.1);transition:transform .2s ease,border-color .2s ease}
+  .contact-link:hover{transform:translateX(5px);border-color:#ef6b3b}
+  footer{background:#171b1d;color:#eee8dc;border-color:#303336}
+  footer .brand, footer .footer-social a{color:#eee8dc}
+  footer .footer-bottom{color:#89877f}
+
+  @media(max-width:980px){
+    .hero{min-height:auto;padding-top:55px}
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .hero-art{order:-1;min-height:540px}
+    .hero-art .hero-map-box{height:540px}
+    .hero-art:before{display:none}
+    .gallery-card{flex-basis:82vw}
+  }
+  @media(max-width:720px){
+    section{padding:78px 5vw}
+    .hero{padding:28px 5vw 70px}
+    h1.hero-title{font-size:clamp(3rem,15vw,4.7rem)}
+    .hero-sub{font-size:1rem}
+    .hero-art{min-height:440px}
+    .hero-art .hero-map-box{height:440px;border-radius:24px}
+    .hero-art:after{right:4px;bottom:25px;font-size:.55rem;padding:10px 13px}
+    .hero-art .stamp{display:none}
+    .about-grid{gap:38px}
+    .about-portrait{min-height:380px}
+    .photo-gallery{padding-top:82px;padding-bottom:90px}
+    .gallery-head{margin-bottom:12px}
+    .gallery-scroller{padding:18px 7vw 35px;margin:0 -7vw;gap:12px}
+    .gallery-card{flex-basis:86vw;aspect-ratio:4/5;border-radius:24px;transform:scale(.95)}
+    .gallery-card.active{transform:scale(1)}
+    .gallery-caption{left:20px;right:20px;bottom:20px}
+    .gallery-caption h3{font-size:1.55rem}
+    .gallery-caption p{font-size:.78rem}
+    .gallery-meta{display:none}
+    .gallery-controls{width:100%;justify-content:flex-end}
+    .gallery-arrow{width:48px;height:48px}
+    .state-grid{grid-template-columns:1fr 1fr}
+    .content-grid{grid-template-columns:1fr}
+    .channel-cta{padding:28px 24px}
+    .form-card{padding:24px}
+    .wa-float{right:15px}
+  }
+  @media(max-width:420px){
+    .state-grid{grid-template-columns:1fr}
+    .hero-meta{gap:20px}
+    .hero-ctas .btn{width:100%;justify-content:center}
+    .gallery-card{flex-basis:88vw}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .marquee-track{animation:none}
+  }
+
 </style>
 </head>
 <body>
@@ -562,6 +809,71 @@
     </div>
   </section>
 
+
+  <!-- PREMIUM PHOTO GALLERY -->
+  <section class="photo-gallery" id="gallery">
+    <div class="gallery-shell">
+      <div class="gallery-head">
+        <div class="gallery-head-copy">
+          <span class="gallery-kicker">Through my lens</span>
+          <h2 class="gallery-title">Moments that made<br><em>the journey.</em></h2>
+          <p class="gallery-sub">A visual diary from the road — swipe through the moments, open any photo fullscreen, and experience the journey frame by frame.</p>
+        </div>
+        <div class="gallery-controls" aria-label="Gallery controls">
+          <button class="gallery-arrow" id="galleryPrev" type="button" aria-label="Previous photo">←</button>
+          <button class="gallery-arrow" id="galleryNext" type="button" aria-label="Next photo">→</button>
+        </div>
+      </div>
+
+      <div class="gallery-scroller" id="galleryScroller" tabindex="0" aria-label="Photo gallery">
+        <article class="gallery-card active" data-index="0">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiOW6ww6vzpOrC4wDlvRjj_id1YNij15fBGxcP6vMTMUz-xJPWhJFQKRLK2e_7bXY35N5pfu0oAJqquZwHMYsjEXfqHC2cwucG-_CS9jnnP8XQNbST_YT05e1fb9RRy2Cypcc2k_wc4Gpe5mofl2rwM4IRYgDJ2PTDuQmHbi1x-Bks5d-CdAMNRO-B5Eh1O/s1280/WhatsApp%20Image%202026-09-30%20at%2017.23.58.jpeg" alt="Travel moment from the journey" loading="lazy" decoding="async">
+          <span class="gallery-number">01 / 04</span>
+          <button class="gallery-expand" type="button" aria-label="Open photo 1 fullscreen">⛶</button>
+          <div class="gallery-caption"><div><small>Journey · Frame 01</small><h3>One more memory for the road.</h3><p>The little moments between destinations are often the ones worth remembering.</p></div></div>
+        </article>
+
+        <article class="gallery-card" data-index="1">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFp-2FWQ4oPyEK83tmWjL9G3gbmJAaG-f86AeONqrgRhC0ETQSy-PKomdDqpmP-pjgct4nQsq79Mizfe9ih3etOPFiHymx2cb57OZpU_xo2Q4JHhgYSWFI3p0DK7xAndeki3fdMAtBBKud2bedhhyphenhyphenb9O8SkRn4URRwO5V-hkLV1Ktoznau7eZCbhzw4Cav/s1280/WhatsApp%20Image%202026-09-30%20at%2017.24.02%20%281%29.jpeg" alt="Travel photo from Unfiltered Shreyash" loading="lazy" decoding="async">
+          <span class="gallery-number">02 / 04</span>
+          <button class="gallery-expand" type="button" aria-label="Open photo 2 fullscreen">⛶</button>
+          <div class="gallery-caption"><div><small>Journey · Frame 02</small><h3>Chasing stories, not just places.</h3><p>Every stop adds another chapter to the journey across Bharat.</p></div></div>
+        </article>
+
+        <article class="gallery-card" data-index="2">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjerYErg0ZSzgNnWWoby5WXbI6wp0Tjde8Q5xON2JXqHGmnqf6Akd1G9cYCXPq8UtVfTBJMK8_bKr6es5GmHLne3ZLi7LMWkLSpdwPJnyh-KpeiHN6t6e2jZYaXwvov01S1It5lBYXLKIjszyvLUKxrmXEwGwLcxZ57ogx-C-OsmH_BTl5WFnWCXdwd0aBU/s1280/WhatsApp%20Image%202026-09-30%20at%2017.24.02.jpeg" alt="Travel journey photo" loading="lazy" decoding="async">
+          <span class="gallery-number">03 / 04</span>
+          <button class="gallery-expand" type="button" aria-label="Open photo 3 fullscreen">⛶</button>
+          <div class="gallery-caption"><div><small>Journey · Frame 03</small><h3>Collecting moments along the way.</h3><p>From unexpected stops to unforgettable views — the road keeps giving.</p></div></div>
+        </article>
+
+        <article class="gallery-card" data-index="3">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiPtozSEN8laCiJJ4btNhT6Uz6CdrnXr1RbaSrZxNzppyY8nsAfV0G3nPxMyH2HpkD-7Dfu5QE-9TrSHAnK_tigGi6LiFOOLhNQDvM_M6IyheHX5w7zmWUfvZXR9hDNuy2k8wWaUFGn7KNlhb_I7mQBhCP5mhAI7SPmdloZ7EQYt0lHoLz2o7-IV_fypKFv/s1179/WhatsApp%20Image%202026-09-30%20at%2017.24.01%20%283%29.jpeg" alt="Unfiltered Shreyash travel memory" loading="lazy" decoding="async">
+          <span class="gallery-number">04 / 04</span>
+          <button class="gallery-expand" type="button" aria-label="Open photo 4 fullscreen">⛶</button>
+          <div class="gallery-caption"><div><small>Journey · Frame 04</small><h3>Keep moving. Keep exploring.</h3><p>The journey is still being written — one state, one story, one frame at a time.</p></div></div>
+        </article>
+      </div>
+
+      <div class="gallery-status">
+        <div class="gallery-progress" aria-hidden="true"><span id="galleryProgress"></span></div>
+        <span class="gallery-counter" id="galleryCounter">01 / 04</span>
+      </div>
+      <div class="gallery-dots" id="galleryDots" aria-label="Choose photo"></div>
+      <p class="gallery-hint">Swipe on mobile · drag on desktop · use ← → keys · tap ⛶ for fullscreen</p>
+    </div>
+  </section>
+
+  <div class="gallery-lightbox" id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Fullscreen photo viewer">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="Close fullscreen photo">✕</button>
+    <button class="lightbox-prev" id="lightboxPrev" type="button" aria-label="Previous fullscreen photo">←</button>
+    <div class="lightbox-image-wrap">
+      <img class="lightbox-image" id="lightboxImage" src="" alt="Fullscreen travel photo">
+      <div class="lightbox-label" id="lightboxLabel">01 / 04</div>
+    </div>
+    <button class="lightbox-next" id="lightboxNext" type="button" aria-label="Next fullscreen photo">→</button>
+  </div>
+
   <!-- WHY FULL TIME -->
   <section id="why">
     <div class="wrap">
@@ -587,7 +899,7 @@
         <p>Tourism boards, hotels, local businesses and brands — if you want your state or country covered honestly, on camera and in writing, this is the place to start.</p>
         <div class="contact-links">
           <a class="contact-link" href="tel:+917249610733"><span class="ico">📞</span><span>+91 72496 10733<small>Call directly</small></span></a>
-          <a class="contact-link" id="waLink" href="#" target="_blank" rel="noopener"><span class="ico">💬</span><span>Message on WhatsApp<small>Fastest way to reach me</small></span></a>
+          <a class="contact-link" id="waLink" href="yashwaghmare0902@gmail.com" target="_blank" rel="noopener"><span class="ico">💬</span><span>Email<small>Fastest way to reach me</small></span></a>
           <a class="contact-link" href="https://www.youtube.com/@yashwaghmare0902" target="_blank" rel="noopener"><span class="ico">▶</span><span>Unfiltered Shreyash<small>YouTube channel</small></span></a>
           <a class="contact-link" href="https://unfilteredshreyash.blogspot.com/" target="_blank" rel="noopener"><span class="ico">✎</span><span>Shreyash Vlogs<small>Blogger — Unfiltered Shreyash</small></span></a>
         </div>
@@ -762,6 +1074,150 @@
   });
 
   document.getElementById('year').textContent = new Date().getFullYear();
+  // ---- Premium photo gallery ----
+  (function initGallery(){
+    var scroller = document.getElementById('galleryScroller');
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.gallery-card'));
+    var prev = document.getElementById('galleryPrev');
+    var next = document.getElementById('galleryNext');
+    var progress = document.getElementById('galleryProgress');
+    var counter = document.getElementById('galleryCounter');
+    var dots = document.getElementById('galleryDots');
+    var lightbox = document.getElementById('galleryLightbox');
+    var lightboxImage = document.getElementById('lightboxImage');
+    var lightboxLabel = document.getElementById('lightboxLabel');
+    var lightboxClose = document.getElementById('lightboxClose');
+    var lightboxPrev = document.getElementById('lightboxPrev');
+    var lightboxNext = document.getElementById('lightboxNext');
+    var active = 0;
+    var autoplayTimer = null;
+    var dragStartX = 0;
+    var dragScrollLeft = 0;
+    var dragging = false;
+
+    if (!scroller || !cards.length) return;
+
+    cards.forEach(function(card, index){
+      var dot = document.createElement('button');
+      dot.className = 'gallery-dot' + (index === 0 ? ' active' : '');
+      dot.type = 'button';
+      dot.setAttribute('aria-label', 'Go to photo ' + (index + 1));
+      dot.addEventListener('click', function(){ goTo(index); });
+      dots.appendChild(dot);
+
+      card.querySelector('.gallery-expand').addEventListener('click', function(e){
+        e.stopPropagation();
+        openLightbox(index);
+      });
+    });
+
+    var dotEls = Array.prototype.slice.call(document.querySelectorAll('.gallery-dot'));
+
+    function setActive(index){
+      active = Math.max(0, Math.min(cards.length - 1, index));
+      cards.forEach(function(card, i){ card.classList.toggle('active', i === active); });
+      dotEls.forEach(function(dot, i){ dot.classList.toggle('active', i === active); });
+      progress.style.width = (((active + 1) / cards.length) * 100) + '%';
+      counter.textContent = String(active + 1).padStart(2,'0') + ' / ' + String(cards.length).padStart(2,'0');
+    }
+
+    function goTo(index){
+      index = (index + cards.length) % cards.length;
+      var card = cards[index];
+      var left = card.offsetLeft - (scroller.clientWidth - card.clientWidth) / 2;
+      scroller.scrollTo({left:left, behavior:'smooth'});
+      setActive(index);
+      restartAutoplay();
+    }
+
+    prev.addEventListener('click', function(){ goTo(active - 1); });
+    next.addEventListener('click', function(){ goTo(active + 1); });
+
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting && entry.intersectionRatio > .55) {
+          var index = cards.indexOf(entry.target);
+          if (index !== -1) setActive(index);
+        }
+      });
+    }, {root:scroller, threshold:[.55,.75]});
+    cards.forEach(function(card){ observer.observe(card); });
+
+    function startAutoplay(){
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      clearInterval(autoplayTimer);
+      autoplayTimer = setInterval(function(){ goTo(active + 1); }, 5500);
+    }
+    function restartAutoplay(){ startAutoplay(); }
+    scroller.addEventListener('mouseenter', function(){ clearInterval(autoplayTimer); });
+    scroller.addEventListener('mouseleave', startAutoplay);
+    scroller.addEventListener('touchstart', function(){ clearInterval(autoplayTimer); }, {passive:true});
+    scroller.addEventListener('touchend', startAutoplay, {passive:true});
+
+    scroller.addEventListener('mousedown', function(e){
+      dragging = true;
+      scroller.classList.add('dragging');
+      dragStartX = e.pageX - scroller.offsetLeft;
+      dragScrollLeft = scroller.scrollLeft;
+      clearInterval(autoplayTimer);
+    });
+    window.addEventListener('mouseup', function(){
+      if (!dragging) return;
+      dragging = false;
+      scroller.classList.remove('dragging');
+      startAutoplay();
+    });
+    scroller.addEventListener('mousemove', function(e){
+      if (!dragging) return;
+      e.preventDefault();
+      var x = e.pageX - scroller.offsetLeft;
+      scroller.scrollLeft = dragScrollLeft - (x - dragStartX) * 1.35;
+    });
+
+    function openLightbox(index){
+      active = index;
+      updateLightbox();
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lightboxClose.focus();
+      clearInterval(autoplayTimer);
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      startAutoplay();
+    }
+    function updateLightbox(){
+      var img = cards[active].querySelector('img');
+      lightboxImage.src = img.currentSrc || img.src;
+      lightboxImage.alt = img.alt;
+      lightboxLabel.textContent = String(active + 1).padStart(2,'0') + ' / ' + String(cards.length).padStart(2,'0');
+    }
+    function lightboxMove(dir){
+      active = (active + dir + cards.length) % cards.length;
+      updateLightbox();
+      setActive(active);
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', function(){ lightboxMove(-1); });
+    lightboxNext.addEventListener('click', function(){ lightboxMove(1); });
+    lightbox.addEventListener('click', function(e){ if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', function(e){
+      if (!lightbox.classList.contains('open')) {
+        if (e.key === 'ArrowLeft') goTo(active - 1);
+        if (e.key === 'ArrowRight') goTo(active + 1);
+        return;
+      }
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lightboxMove(-1);
+      if (e.key === 'ArrowRight') lightboxMove(1);
+    });
+
+    setActive(0);
+    startAutoplay();
+  })();
+
 </script>
 
 </body>
